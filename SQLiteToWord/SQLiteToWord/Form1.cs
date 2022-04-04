@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLiteToWord.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -148,7 +149,7 @@ namespace SQLiteToWord
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //TODO сохранение в бд, всплывающее окно вы уверены
+            //TODO сохранение в бд
             if (productsInBasket.Count > 0) {
                 MessageBoxButtons mbb = MessageBoxButtons.YesNo;
                 DialogResult result;
@@ -156,9 +157,36 @@ namespace SQLiteToWord
                 result = MessageBox.Show("Вы уверены что хотите оформить заказ?", "Заказ", mbb);
                 if (result == DialogResult.Yes)
                 {
-                    var wd = new WordConverter(productsInBasket);
+                    Orders order = new Orders
+                    {
+                        order_id = db.Orders.ToList().Count + 1,
+                        del_country = "Россия",
+                        del_city = "Подольск",
+                        del_street = "Ленина",
+                        del_house = "13",
+                        del_office_or_appartment = "8",
+                        del_date = DateTime.Now,
+                        client_id = 1
+                    };
+                    db.Orders.Add(order);
+
+                    for (int i = 0; i < productsInBasket.Count; i++) 
+                    {
+                        Acquisitions ac = new Acquisitions()
+                        {
+                            process_id = db.Acquisitions.ToList()
+                            .Count + i + 1,
+                            order_id = order.order_id,
+                            product_id = productsInBasket[i].product_id,
+                            number_of_items = productsInBasket[i].number
+                        };
+                        db.Acquisitions.Add(ac);
+                    }
+
+                    var wd = new WordConverter(productsInBasket, order.order_id, order.del_date.ToString());
                     wd.CreateDocument();
-                    productsInBasket = new List<Products>();
+
+                    db.SaveChanges();
                     updateProducts();
                 }
             }

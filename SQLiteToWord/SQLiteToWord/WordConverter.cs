@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLiteToWord.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,16 @@ namespace SQLiteToWord
     internal class WordConverter
     {
         public List<Products> lp { get; set; }
-        public WordConverter(List<Products> lp) { this.lp = lp; }
+
+        public int order_id { get; set; }
+
+        public string date { get; set; }
+        public WordConverter(List<Products> lp, int order_id, string date) 
+        {
+            this.lp = lp;
+            this.order_id = order_id;
+            this.date = date; 
+        }
 
         private string TemplatePath = $@"R:\Документы\GIT\SQLiteToWord\SQLiteToWord\SQLiteToWord\Tovarnyy-chek-blank.docx";
 
@@ -41,8 +51,8 @@ namespace SQLiteToWord
 
             var valuesToFill = new Content(
 
-                new FieldContent("WordChequeId", DateTime.Now.Second.ToString()),
-                new FieldContent("WordChequeDate", DateTime.Now.ToString()),
+                new FieldContent("WordChequeId", order_id.ToString()),
+                new FieldContent("WordChequeDate", date),
                 tc,
                 new FieldContent("WordPriceOfAllProducts", allCoast.ToString()));
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SQLiteToWord
+namespace SQLiteToWord.Data
 {
     internal class Products
     {
@@ -22,7 +22,12 @@ namespace SQLiteToWord
 
         public decimal price_per_one { get; set; }
 
-        public Products(int _product_id, string _product_name, int _number, string _warehouse_place, decimal _price_per_one) 
+        public Products(
+            int _product_id, 
+            string _product_name, 
+            int _number, 
+            string _warehouse_place, 
+            decimal _price_per_one) 
         {
             this.product_id = _product_id;
             this.product_name = _product_name;
