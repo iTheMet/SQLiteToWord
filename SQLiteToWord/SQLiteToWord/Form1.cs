@@ -186,6 +186,8 @@ namespace SQLiteToWord
                     var wd = new WordConverter(productsInBasket, order.order_id, order.del_date.ToString());
                     wd.CreateDocument();
 
+                    productsInBasket = new List<Products>();
+
                     db.SaveChanges();
                     updateProducts();
                 }
