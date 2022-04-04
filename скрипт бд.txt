@@ -1,0 +1,99 @@
+create table clients(
+client_id integer primary key autoincrement not null UNIQUE, 
+client_identity text not null, 
+first_name text not null, 
+last_name text not null, 
+patronymic text, 
+phone_number text, 
+country text not null, 
+city text not null, 
+street text not null, 
+house text not null, 
+apartment_or_office text not null, 
+post_index text not null);
+
+create table payment(
+transaction_id integer primary key autoincrement not null unique,
+client_id integer not null,
+sum decimal not null,
+foreign key(client_id) references clients(client_id));
+
+create table orders(
+order_id integer primary key autoincrement not null unique,
+del_country text not null,
+del_city text not null,
+del_street text not null,
+del_house text not null,
+del_office_or_appartment text not null,
+del_date date,
+client_id integer,
+foreign key(client_id) references clients(client_id));
+
+create table positions(
+position_id integer primary key autoincrement not null unique,
+position_name text not null unique,
+salary decimal not null);
+
+create table employees(
+employee_id integer primary key autoincrement not null unique,
+first_name text not null,
+last_name text not null,
+patronymic text,
+phone_number text not null,
+reg_country text not null,
+reg_city text not null,
+reg_street text not null,
+reg_house text not null,
+reg_apartment text not null,
+inn text not null,
+snils text not null,
+passport_series text not null,
+passport_number text not null,
+passport_date date not null,
+passport_issued text not null,
+position_id integer,
+foreign key(position_id) references positions(position_id));
+
+create table orders_executions(
+exec_id integer primary key autoincrement not null unique,
+employee_id integer not null,
+order_id integer not null,
+foreign key(employee_id) references employees(employee_id));
+
+create table suppliers(
+supplier_id integer primary key autoincrement not null unique,
+supplier_name text not null unique,
+contact_person text not null,
+phone_number text not null,
+reg_country text not null,
+reg_city text not null,
+reg_street text not null,
+reg_house text not null,
+reg_apartment text not null,
+accommodation_country text not null,
+accommodation_city text not null,
+accommodation_street text not null,
+accommodation_house text not null,
+accommodation_apartment text not null);
+
+create table supplies(
+supply_id integer primary key autoincrement not null unique,
+supplier_id integer not null,
+product_id integer not null,
+foreign key(supplier_id) references suppliers(supplier_id),
+foreign key(product_id) references products(product_id));
+
+create table products(
+product_id integer primary key autoincrement not null unique,
+product_name text not null,
+number integer not null,
+warehouse_place text not null,
+price_per_one decimal not null);
+
+create table acquisitions(
+process_id integer primary key autoincrement not null unique,
+order_id integer not null,
+product_id integer not null,
+number_of_items integer not null,
+foreign key(order_id) references orders(order_id),
+foreign key(product_id) references products(product_id));

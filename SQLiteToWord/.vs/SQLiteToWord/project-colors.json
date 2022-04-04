@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "ee815f45-d8ed-4dce-ba6a-a1028b47445a": {
+      "ProjectGuid": "ee815f45-d8ed-4dce-ba6a-a1028b47445a",
+      "DisplayName": "SQLiteToWord",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 1
+}
