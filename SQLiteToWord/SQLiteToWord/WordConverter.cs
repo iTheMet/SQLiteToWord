@@ -16,16 +16,16 @@ namespace SQLiteToWord
         public int order_id { get; set; }
 
         public string date { get; set; }
-        public WordConverter(List<Products> lp, int order_id, string date) 
+        public WordConverter(List<Products> lp, int order_id, string date)
         {
             this.lp = lp;
             this.order_id = order_id;
-            this.date = date; 
+            this.date = date;
         }
 
-        private string TemplatePath = $@"R:\Документы\GIT\SQLiteToWord\SQLiteToWord\SQLiteToWord\Tovarnyy-chek-blank.docx";
+        private string TemplatePath = $@"{Environment.CurrentDirectory}\Tovarnyy-chek-blank.docx";
 
-        private string DocksPath = $@"R:\Документы\GIT\SQLiteToWord\SQLiteToWord\SQLiteToWord/docs/";
+        private string DocksPath = $@"{Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString())}/docs/";
 
         public void CreateDocument()
         {

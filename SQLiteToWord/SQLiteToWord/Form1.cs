@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -184,7 +185,15 @@ namespace SQLiteToWord
                     }
 
                     var wd = new WordConverter(productsInBasket, order.order_id, order.del_date.ToString());
-                    wd.CreateDocument();
+
+                    try 
+                    { 
+                        wd.CreateDocument(); 
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
 
                     productsInBasket = new List<Products>();
 
