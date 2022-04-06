@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,12 +40,6 @@ namespace SQLiteToWord
 
             updateProducts();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void listView2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView2.Focused == true)
@@ -98,16 +93,42 @@ namespace SQLiteToWord
                         }
                     }
                 }
-                else
-                {
-
-                }
+                updateProducts();
             }
-            updateProducts();
-
         }
 
-        private void updateProducts()
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listView1.Focused == true)
+            {
+                if (Convert.ToInt32(listView1.FocusedItem.SubItems[2].Text) >= 0)
+                {
+                    for (int i = 0; i < productsInBasket.Count; i++)
+                    {
+                        if (Convert.ToInt32(listView1.FocusedItem.SubItems[3].Text) == productsInBasket[i].product_id)
+                        {
+                                for (int j = 0; j < productsInStock.Count; j++)
+                                {
+                                    if (Convert.ToInt32(listView1.FocusedItem.SubItems[3].Text) == productsInStock[j].product_id)
+                                    {
+                                        productsInBasket[i].number--;
+                                        productsInStock[j].number++;
+
+                                        if (productsInBasket[i].number < 1)
+                                        {
+                                            productsInBasket.RemoveAt(i);
+                                        }
+                                        break;
+                                    }
+                                }
+                        }
+                    }
+                }
+                updateProducts();
+            }
+        }
+
+            private void updateProducts()
         {
             productsInStock = db.Products.ToList();
 
